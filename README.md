@@ -1,8 +1,14 @@
 # 📊 AppMRR - iOS App Revenue Leaderboard
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)
+
 A transparent, public leaderboard showcasing iOS app revenues powered by RevenueCat. Track and compare MRR (Monthly Recurring Revenue) and revenue metrics from verified apps.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/appmrr)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GonzaloFuentes28/AppMRR)
 
 ## ✨ Features
 
@@ -26,7 +32,7 @@ A transparent, public leaderboard showcasing iOS app revenues powered by Revenue
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/appmrr.git
+git clone https://github.com/GonzaloFuentes28/AppMRR.git
 cd appmrr
 ```
 
@@ -203,7 +209,7 @@ We welcome contributions! Here's how to get started:
 ### Setup for Development
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/appmrr.git`
+2. Clone your fork: `git clone https://github.com/GonzaloFuentes28/AppMRR.git`
 3. Create a branch: `git checkout -b feature/your-feature`
 4. Install dependencies: `npm install`
 5. Make your changes
