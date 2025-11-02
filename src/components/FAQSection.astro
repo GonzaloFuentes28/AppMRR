@@ -1,0 +1,112 @@
+---
+/**
+ * FAQSection Component
+ * 
+ * Displays frequently asked questions about the AppMRR leaderboard.
+ * Includes information about:
+ * - API key security
+ * - Data update frequency
+ * - Revenue calculation limitations
+ * - How to delete an app
+ * 
+ * Uses HTML details/summary for collapsible Q&A items
+ * 
+ * Used in: index.astro
+ */
+---
+
+<section class="faq-section">
+	<div class="card faq-card">
+		<div class="faq-header">
+			<h2>FAQ</h2>
+			<p class="faq-subtitle">Common questions about data and privacy</p>
+		</div>
+		<div class="faq-list">
+			<details>
+				<summary>Are my keys safe?</summary>
+				<p>
+					We only require a RevenueCat API key with <strong>read-only</strong> access to "Chart metrics". Keys are stored encrypted at rest and never shared publicly. You can revoke the key from RevenueCat at any time.
+				</p>
+			</details>
+
+			<details>
+				<summary>How frequent are data updating?</summary>
+				<p>
+					Metrics are refreshed automatically on a daily basis (midnight UTC). We aim to keep the leaderboard current without requiring manual updates.
+				</p>
+			</details>
+
+			<details>
+				<summary>Why can't I see full time revenue?</summary>
+				<p>
+					RevenueCat's API only returns revenue for the last 28 days. We are working on a solution to display all-time revenue with graphs and charts.
+				</p>
+			</details>
+
+			<details>
+				<summary>How can I delete my app?</summary>
+				<p>
+					You can delete your app revoking the API key from RevenueCat. It will be removed from the leaderboard within 24 hours (when the next daily update runs).
+				</p>
+			</details>
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq-section {
+		margin-top: 2rem;
+	}
+
+	.card {
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 8px;
+		overflow: hidden;
+		transition: background-color 0.3s ease, border-color 0.3s ease;
+	}
+
+	.faq-card {
+		padding: 1.5rem;
+	}
+
+	.faq-header h2 {
+		margin: 0 0 0.25rem 0;
+		font-size: 1.25rem;
+		color: var(--fg);
+	}
+
+	.faq-subtitle {
+		margin: 0 0 1rem 0;
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+
+	.faq-list details {
+		border-top: 1px solid var(--border);
+		padding: 0.75rem 0;
+	}
+
+	.faq-list details:first-of-type {
+		border-top: none;
+	}
+
+	.faq-list summary {
+		cursor: pointer;
+		font-weight: 600;
+		color: var(--fg);
+		list-style: none;
+	}
+
+	.faq-list summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-list p {
+		margin: 0.5rem 0 0 0;
+		color: var(--muted);
+		line-height: 1.6;
+		font-size: 0.95rem;
+	}
+</style>
+

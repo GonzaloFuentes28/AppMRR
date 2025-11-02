@@ -1,0 +1,80 @@
+---
+/**
+ * Home Page (AppMRR Leaderboard)
+ * 
+ * Main landing page displaying the leaderboard of apps ranked by MRR and revenue.
+ * This page orchestrates all the components and handles data fetching.
+ * 
+ * Features:
+ * - Server-side rendering with fresh data (no caching)
+ * - Sortable columns (MRR, Revenue)
+ * - Add app modal
+ * - FAQ section
+ * - Light/dark theme toggle
+ */
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import AddAppButton from '../components/AddAppButton.astro';
+import EmptyState from '../components/EmptyState.astro';
+import LeaderboardTable from '../components/LeaderboardTable.astro';
+import AddAppModal from '../components/AddAppModal.astro';
+import FAQSection from '../components/FAQSection.astro';
+import { getStartupsWithMetrics } from '../lib/db';
+
+// Disable caching to ensure we always get the latest data
+export const prerender = false;
+
+// Get sort parameter from query string, default to 'revenue'
+const sortBy = (Astro.url.searchParams.get('sort') as 'revenue' | 'mrr') || 'revenue';
+const sortOrder = (Astro.url.searchParams.get('order') as 'asc' | 'desc') || 'desc';
+const startups = await getStartupsWithMetrics(sortBy);
+---
+
+<Layout title="AppMRR Leaderboard">
+	<main class="main">
+		<div class="container">
+			<Header />
+			
+			<AddAppButton />
+
+			{startups.length === 0 ? (
+				<EmptyState />
+			) : (
+				<LeaderboardTable startups={startups} />
+			)}
+			
+			<FAQSection />
+		</div>
+	</main>
+
+	<AddAppModal />
+</Layout>
+
+<script>
+	// Import all client-side scripts
+	import '../scripts/theme';
+	import '../scripts/modal';
+	import '../scripts/form';
+	import '../scripts/table';
+	import '../scripts/images';
+</script>
+
+<style>
+	.main {
+		min-height: calc(100vh - 200px);
+		padding: 2rem 0;
+		transition: background-color 0.3s ease;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			padding: 0 1rem;
+		}
+	}
+</style>

@@ -1,0 +1,48 @@
+---
+/**
+ * EmptyState Component
+ * 
+ * Displays a friendly empty state when no apps are in the leaderboard yet.
+ * Includes a call-to-action button to open the Add App modal.
+ * 
+ * Used in: index.astro
+ */
+---
+
+<div class="empty-state">
+	<p>No apps yet.</p>
+	<button class="add-btn" id="open-modal-empty">Add yours</button>
+</div>
+
+<style>
+	.empty-state {
+		text-align: center;
+		padding: 4rem 2rem;
+		color: var(--muted);
+		transition: color 0.3s ease;
+	}
+
+	.empty-state p {
+		margin: 0 0 1rem;
+	}
+
+	.add-btn {
+		background: var(--btn-bg);
+		color: var(--btn-text);
+		border: 1px solid var(--btn-bg);
+		padding: 0.625rem 1rem;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+		font-family: inherit;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 6px;
+	}
+
+	.add-btn:hover {
+		opacity: 0.8;
+	}
+</style>
+

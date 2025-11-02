@@ -1,0 +1,373 @@
+---
+/**
+ * LeaderboardTable Component
+ * 
+ * Displays the main leaderboard table with all apps ranked by MRR or Revenue.
+ * Features:
+ * - Sortable columns (MRR, Revenue)
+ * - App logos and icons
+ * - Founder information with Twitter links
+ * - Rank medals for top 3 positions
+ * - External links to app websites or App Store
+ * 
+ * Props:
+ * - startups: Array of startup objects with metrics
+ * 
+ * Used in: index.astro
+ */
+import { BadgeCheck } from '@lucide/astro';
+import type { StartupWithMetrics } from '../lib/db';
+
+interface Props {
+	startups: StartupWithMetrics[];
+}
+
+const { startups } = Astro.props;
+---
+
+<div class="card">
+	<div class="table-container">
+		<table>
+			<thead>
+				<tr>
+					<th class="rank-col">Rank</th>
+					<th class="app-col">App</th>
+					<th class="founder-col">Founder</th>
+					<th class="sortable amount-header" data-sort="mrr">
+						<button class="sort-header" data-field="mrr">
+							MRR
+							<svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
+							</svg>
+						</button>
+					</th>
+					<th class="sortable amount-header" data-sort="revenue">
+						<button class="sort-header" data-field="revenue">
+							Revenue (28d)
+							<svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
+							</svg>
+						</button>
+					</th>
+					<th class="action-col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{startups.map((startup, index) => {
+					// Calculate logo URL
+					let logoUrl = '/placeholder.svg';
+					if (startup.app_store_id) {
+						logoUrl = `/api/appstore/icon?id=${startup.app_store_id}`;
+					} else if (startup.website_url) {
+						const domain = startup.website_url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+						logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+					}
+					
+					return (
+					<tr>
+						<td class="rank-cell">
+							{index === 0 && <span class="medal">🥇</span>}
+							{index === 1 && <span class="medal">🥈</span>}
+							{index === 2 && <span class="medal">🥉</span>}
+							{index > 2 && <span class="rank-number">{index + 1}</span>}
+						</td>
+						<td class="app-cell">
+							<img
+								src={logoUrl}
+								alt={startup.name}
+								class="app-logo"
+								loading="lazy"
+							/>
+							<div class="app-info">
+								<span class="app-name">{startup.name}</span>
+								<BadgeCheck class="badge-icon" stroke-width="2.5" />
+							</div>
+						</td>
+						<td class="founder-cell">
+							{startup.founder_username ? (
+								<a href={`https://twitter.com/${startup.founder_username.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="founder-link">
+									<img
+										src={`https://unavatar.io/x/${startup.founder_username.replace('@', '')}`}
+										alt={startup.founder_username}
+										class="founder-avatar"
+										loading="lazy"
+										data-username={startup.founder_username.replace('@', '')}
+									/>
+									<span>@{startup.founder_username.replace('@', '')}</span>
+								</a>
+							) : (
+								<span class="empty-field">—</span>
+							)}
+						</td>
+						<td class="amount">${startup.mrr.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+						<td class="amount">${startup.total_revenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+						<td class="action-cell">
+							{(startup.website_url || startup.app_store_id) && (
+								<a 
+									href={startup.website_url || `https://apps.apple.com/us/app/id${startup.app_store_id}`} 
+									target="_blank" 
+									rel="noopener noreferrer" 
+									class="action-btn"
+								>
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+										<polyline points="15 3 21 3 21 9"></polyline>
+										<line x1="10" y1="14" x2="21" y2="3"></line>
+									</svg>
+								</a>
+							)}
+						</td>
+					</tr>
+					);
+				})}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<style>
+	.card {
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 8px;
+		overflow: hidden;
+		transition: background-color 0.3s ease, border-color 0.3s ease;
+	}
+
+	.table-container {
+		overflow-x: auto;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		background: var(--card-bg);
+	}
+
+	thead {
+		background: var(--thead-bg);
+		border-bottom: 1px solid var(--border);
+		transition: background-color 0.3s ease, border-color 0.3s ease;
+	}
+
+	th {
+		padding: 1rem 1.5rem;
+		text-align: left;
+		font-weight: 600;
+		font-size: 0.875rem;
+		color: var(--muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		white-space: nowrap;
+		transition: color 0.3s ease;
+		background: var(--thead-bg);
+	}
+
+	th.sortable,
+	th.amount-header {
+		text-align: right;
+	}
+
+	th.founder-col {
+		text-align: left;
+	}
+
+	.sort-header {
+		background: none;
+		border: none;
+		padding: 0;
+		font: inherit;
+		color: inherit;
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		transition: color 0.3s ease;
+	}
+
+	.sort-header:hover {
+		color: var(--fg);
+	}
+
+	.sort-icon {
+		width: 16px;
+		height: 16px;
+		opacity: 0.5;
+	}
+
+	tbody tr {
+		background: var(--card-bg);
+		border-bottom: 1px solid var(--border);
+		transition: background-color 0.15s, border-color 0.3s ease;
+	}
+
+	tbody tr:hover {
+		background: var(--row-hover);
+	}
+
+	tbody tr:last-child {
+		border-bottom: none;
+	}
+
+	td {
+		padding: 1rem 1.5rem;
+		font-size: 0.95rem;
+		vertical-align: middle;
+		position: relative;
+		background: var(--card-bg);
+		color: var(--fg);
+	}
+
+	.rank-col {
+		width: 80px;
+		text-align: center;
+	}
+
+	.rank-cell {
+		text-align: center;
+	}
+
+	.medal {
+		font-size: 1.5rem;
+		display: inline-block;
+	}
+
+	.rank-number {
+		color: var(--muted-light);
+		font-weight: 600;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+	}
+
+	.founder-col {
+		min-width: 180px;
+	}
+
+	.founder-cell {
+		white-space: nowrap;
+	}
+
+	.founder-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: var(--fg);
+		transition: opacity 0.15s, color 0.3s ease;
+		white-space: nowrap;
+		flex-wrap: nowrap;
+	}
+
+	.founder-link:hover {
+		opacity: 0.7;
+	}
+
+	.founder-avatar {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		object-fit: cover;
+		background: var(--border);
+		flex-shrink: 0;
+		display: block;
+		transition: background-color 0.3s ease;
+	}
+
+	.app-col {
+		min-width: 250px;
+	}
+
+	.app-cell {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: nowrap;
+	}
+
+	.app-logo {
+		width: 40px;
+		height: 40px;
+		border-radius: 8px;
+		object-fit: cover;
+		background: var(--border);
+		flex-shrink: 0;
+		transition: background-color 0.3s ease;
+	}
+
+	.app-info {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		flex-wrap: nowrap;
+		white-space: nowrap;
+		flex-direction: row;
+	}
+
+	.app-name {
+		font-weight: 500;
+		color: var(--fg);
+		white-space: nowrap;
+		transition: color 0.3s ease;
+	}
+
+	.badge-icon {
+		width: 18px;
+		height: 18px;
+		color: var(--primary);
+		flex-shrink: 0;
+		transition: color 0.3s ease;
+	}
+
+	.amount {
+		text-align: right;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--fg);
+	}
+
+	.empty-field {
+		color: var(--empty);
+		transition: color 0.3s ease;
+	}
+
+	.action-col {
+		width: 80px;
+		text-align: center;
+	}
+
+	.action-cell {
+		text-align: center;
+	}
+
+	.action-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border: none;
+		background: transparent;
+		color: var(--muted);
+		cursor: pointer;
+		border-radius: 6px;
+		transition: all 0.15s, color 0.3s ease;
+	}
+
+	.action-btn:hover {
+		background: var(--row-hover);
+		color: var(--fg);
+	}
+
+	.action-btn svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	@media (max-width: 768px) {
+		th, td {
+			padding: 0.75rem 1rem;
+			font-size: 0.875rem;
+		}
+	}
+</style>
+

@@ -1,0 +1,53 @@
+---
+/**
+ * AddAppButton Component
+ * 
+ * A button that opens the Add App modal when clicked.
+ * Displays in the actions bar at the top of the leaderboard.
+ * 
+ * Used in: index.astro
+ */
+---
+
+<div class="actions-bar">
+	<button class="add-btn" id="open-modal">
+		<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<line x1="12" y1="5" x2="12" y2="19"></line>
+			<line x1="5" y1="12" x2="19" y2="12"></line>
+		</svg>
+		Add New App
+	</button>
+</div>
+
+<style>
+	.actions-bar {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 1.5rem;
+	}
+
+	.add-btn {
+		background: var(--btn-bg);
+		color: var(--btn-text);
+		border: 1px solid var(--btn-bg);
+		padding: 0.625rem 1rem;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+		font-family: inherit;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 6px;
+	}
+
+	.add-btn:hover {
+		opacity: 0.8;
+	}
+
+	.add-btn .icon {
+		width: 16px;
+		height: 16px;
+	}
+</style>
+

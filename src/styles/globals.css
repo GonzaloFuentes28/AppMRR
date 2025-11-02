@@ -1,0 +1,73 @@
+/**
+ * Global Styles
+ * 
+ * Contains design tokens and CSS variables for the entire application.
+ * - Light and dark theme color variables
+ * - Uses OKLCH color space for better color perception
+ * - Includes CSS custom properties for consistent theming
+ * 
+ * Applied globally via Layout.astro
+ */
+
+:root {
+	/* Design tokens (light) */
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+
+	/* Existing variables mapped to tokens */
+	--bg: var(--background);
+	--fg: var(--foreground);
+	--card-bg: var(--card);
+	--card-border: var(--border);
+	--thead-bg: var(--secondary);
+	--row-hover: var(--secondary);
+	--muted: var(--muted-foreground);
+	--muted-light: var(--muted-foreground);
+	--empty: oklch(0.8 0 0);
+	--btn-bg: var(--primary);
+	--btn-text: var(--primary-foreground);
+	--input-bg: var(--input);
+}
+
+[data-theme="dark"], .dark {
+	/* Design tokens (dark) */
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.145 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--primary: oklch(0.985 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--border: oklch(0.269 0 0);
+	--input: oklch(0.269 0 0);
+	--ring: oklch(0.439 0 0);
+
+	/* Existing variables mapped to tokens */
+	--bg: var(--background);
+	--fg: var(--foreground);
+	--card-bg: var(--card);
+	--card-border: var(--border);
+	--thead-bg: var(--secondary);
+	--row-hover: var(--secondary);
+	--muted: var(--muted-foreground);
+	--muted-light: var(--muted-foreground);
+	--empty: oklch(0.4 0 0);
+	--btn-bg: var(--primary);
+	--btn-text: var(--primary-foreground);
+	--input-bg: var(--input);
+}
+

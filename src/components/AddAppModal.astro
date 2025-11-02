@@ -1,0 +1,328 @@
+---
+/**
+ * AddAppModal Component
+ * 
+ * Modal dialog for adding a new app to the leaderboard.
+ * Includes a form with fields for:
+ * - App name
+ * - App Store ID (preferred for icon)
+ * - Website URL (alternative for icon)
+ * - Founder Twitter handle
+ * - RevenueCat Project ID
+ * - RevenueCat API Key (read-only)
+ * 
+ * Features:
+ * - Form validation
+ * - Loading states
+ * - Success/error messages
+ * - Accessible keyboard navigation (ESC to close)
+ * 
+ * Used in: index.astro
+ */
+---
+
+<div id="modal" class="modal">
+	<div class="modal-backdrop" id="modal-backdrop"></div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<div>
+				<h2>Add New App</h2>
+				<p class="modal-description">Add a new app to the leaderboard. Connect your RevenueCat account to automatically fetch MRR and revenue data.</p>
+			</div>
+			<button class="close-btn" id="close-modal">×</button>
+		</div>
+		<form id="startup-form" class="form">
+			<div class="field">
+				<label for="name">App Name *</label>
+				<input type="text" id="name" name="name" required placeholder="CloudSync Pro" />
+			</div>
+
+			<div class="field">
+				<label for="appStoreId">App Store ID *</label>
+				<input type="text" id="appStoreId" name="appStoreId" placeholder="6746816013" />
+				<p class="help-text">Preferred. Provide this if possible (faster and more reliable icon).</p>
+			</div>
+
+			<div class="field">
+				<label for="websiteUrl">App Website *</label>
+				<input type="url" id="websiteUrl" name="websiteUrl" placeholder="https://example.com" />
+				<p class="help-text">Only if you don't have the App Store ID.</p>
+			</div>
+
+			<div class="field">
+				<label for="founderUsername">Founder Twitter Handle</label>
+				<input type="text" id="founderUsername" name="founderUsername" placeholder="@username" />
+			</div>
+
+			<div class="field">
+				<label for="projectId">RevenueCat Project ID *</label>
+				<input type="text" id="projectId" name="projectId" required placeholder="abcd1234" />
+			</div>
+
+			<div class="field">
+				<label for="revenuecatApiKey">RevenueCat API Key *</label>
+				<input type="password" id="revenuecatApiKey" name="revenuecatApiKey" required placeholder="sk_abc123..." />
+				<div class="field-banner">
+					<strong>Important:</strong> Create an API key (V2) with <em>READ ONLY</em> permissions limited to "Chart metrics". Do not enable write access or permissions to other data.
+				</div>
+			</div>
+
+			<div id="form-message" class="message" style="display: none;"></div>
+
+			<div class="form-actions">
+				<button type="button" class="btn-secondary" id="cancel-modal">Cancel</button>
+				<button type="submit" class="btn-primary" id="submit-btn">
+					<span class="btn-text">Add App</span>
+					<span class="btn-loader" style="display: none;">...</span>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<style>
+	.modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.2s;
+		padding: 2rem;
+	}
+
+	.modal.active {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.modal-backdrop {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.7);
+		backdrop-filter: blur(4px);
+		transition: background 0.3s ease;
+	}
+
+	:global([data-theme="dark"]) .modal-backdrop {
+		background: rgba(0, 0, 0, 0.9);
+	}
+
+	.modal-content {
+		background: var(--card-bg);
+		width: 100%;
+		max-width: 500px;
+		max-height: 90vh;
+		overflow-y: auto;
+		position: relative;
+		z-index: 1;
+		border-radius: 8px;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		border: 1px solid var(--border);
+		transition: background-color 0.3s ease, border-color 0.3s ease;
+	}
+
+	.modal-header {
+		padding: 1.5rem 1.5rem 1rem;
+		border-bottom: 1px solid var(--border);
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		transition: border-color 0.3s ease;
+	}
+
+	.modal-header h2 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem;
+		color: var(--fg);
+		transition: color 0.3s ease;
+	}
+
+	.modal-description {
+		font-size: 0.875rem;
+		color: var(--muted);
+		margin: 0;
+		line-height: 1.5;
+		transition: color 0.3s ease;
+	}
+
+	.close-btn {
+		background: none;
+		border: none;
+		font-size: 1.5rem;
+		line-height: 1;
+		cursor: pointer;
+		color: var(--muted);
+		padding: 0;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+		transition: all 0.15s, color 0.3s ease;
+		flex-shrink: 0;
+	}
+
+	.close-btn:hover {
+		background: var(--row-hover);
+		color: var(--fg);
+	}
+
+	.form {
+		padding: 1.5rem;
+		background: var(--card-bg);
+		transition: background-color 0.3s ease;
+	}
+
+	.field {
+		margin-bottom: 1.25rem;
+	}
+
+	.field:last-of-type {
+		margin-bottom: 0;
+	}
+
+	.field label {
+		display: block;
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--fg);
+		transition: color 0.3s ease;
+	}
+
+	.field input {
+		width: 100%;
+		padding: 0.625rem 0.75rem;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		font-size: 0.95rem;
+		font-family: inherit;
+		transition: border-color 0.15s, background-color 0.3s ease, color 0.3s ease;
+		box-sizing: border-box;
+		background: var(--input-bg);
+		color: var(--fg);
+	}
+
+	.field input:focus {
+		outline: none;
+		border-color: var(--fg);
+	}
+
+	.field input::placeholder {
+		color: var(--muted);
+		opacity: 0.7;
+	}
+
+	.field-banner {
+		margin-top: 0.5rem;
+		padding: 0.75rem 1rem;
+		border-radius: 6px;
+		border: 1px solid rgba(59, 130, 246, 0.25);
+		background: rgba(59, 130, 246, 0.08);
+		color: var(--fg);
+		font-size: 0.85rem;
+		line-height: 1.4;
+	}
+
+	.field-banner strong {
+		display: inline-block;
+		margin-right: 0.25rem;
+	}
+
+	.help-text {
+		margin-top: 0.375rem;
+		font-size: 0.8rem;
+		color: var(--muted);
+		line-height: 1.4;
+	}
+
+	.message {
+		padding: 0.75rem 1rem;
+		border-radius: 6px;
+		margin-bottom: 1rem;
+		font-size: 0.875rem;
+		transition: color 0.3s ease;
+	}
+
+	.message.success {
+		background: rgba(34, 197, 94, 0.1);
+		color: var(--fg);
+		border: 1px solid rgba(34, 197, 94, 0.3);
+	}
+
+	.message.error {
+		background: rgba(239, 68, 68, 0.1);
+		color: var(--fg);
+		border: 1px solid rgba(239, 68, 68, 0.3);
+	}
+
+	.form-actions {
+		display: flex;
+		gap: 0.75rem;
+		justify-content: flex-end;
+		margin-top: 1.5rem;
+	}
+
+	.btn-secondary {
+		background: var(--card-bg);
+		color: var(--fg);
+		border: 1px solid var(--border);
+		padding: 0.625rem 1rem;
+		font-size: 0.9rem;
+		cursor: pointer;
+		font-family: inherit;
+		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+		border-radius: 6px;
+	}
+
+	.btn-secondary:hover {
+		border-color: var(--muted);
+	}
+
+	.btn-primary {
+		background: var(--btn-bg);
+		color: var(--btn-text);
+		border: 1px solid var(--btn-bg);
+		padding: 0.625rem 1rem;
+		font-size: 0.9rem;
+		cursor: pointer;
+		font-family: inherit;
+		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+		border-radius: 6px;
+	}
+
+	.btn-primary:hover {
+		opacity: 0.8;
+	}
+
+	.btn-primary:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	@media (max-width: 768px) {
+		.modal-content {
+			max-width: 100%;
+			border-radius: 0;
+		}
+
+		.modal-header,
+		.form {
+			padding: 1.25rem;
+		}
+	}
+</style>
+

@@ -1,0 +1,118 @@
+---
+/**
+ * Header Component
+ * 
+ * Displays the main header of the AppMRR leaderboard including:
+ * - Brand logo and title
+ * - Subtitle with description
+ * - Theme toggle button (light/dark mode)
+ * 
+ * Used in: index.astro
+ */
+import { Sun, Moon } from '@lucide/astro';
+---
+
+<div class="header-section">
+	<div class="title-wrap">
+		<img src="/appmrr.png" alt="AppMRR" class="brand-icon" />
+		<div class="title-text">
+			<h1>AppMRR</h1>
+			<p class="subtitle">Top performing apps ranked by MRR and Revenue (Last 28 Days)</p>
+		</div>
+	</div>
+	<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+		<Sun class="theme-icon sun" />
+		<Moon class="theme-icon moon" />
+	</button>
+</div>
+
+<style>
+	.header-section {
+		margin-bottom: 2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+
+	.title-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.title-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.brand-icon {
+		width: 60px;
+		height: 60px;
+		border-radius: 8px;
+		object-fit: cover;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 700;
+		margin: 0 0 0.5rem;
+		color: var(--fg);
+		transition: color 0.3s ease;
+	}
+
+	.subtitle {
+		color: var(--muted);
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 400;
+		transition: color 0.3s ease;
+	}
+
+	.theme-toggle {
+		background: var(--card-bg);
+		border: 1px solid var(--border);
+		padding: 0.5rem;
+		cursor: pointer;
+		border-radius: 6px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		color: var(--fg);
+		flex-shrink: 0;
+		transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+	}
+
+	.theme-toggle:hover {
+		background: var(--row-hover);
+	}
+
+	.theme-icon {
+		width: 20px;
+		height: 20px;
+		color: var(--fg);
+		transition: color 0.3s ease;
+	}
+
+	.theme-icon.moon {
+		display: none;
+	}
+
+	:global([data-theme="dark"]) .theme-icon.sun {
+		display: none;
+	}
+
+	:global([data-theme="dark"]) .theme-icon.moon {
+		display: block;
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 1.5rem;
+		}
+	}
+</style>
+
