@@ -16,97 +16,162 @@
 ---
 
 <section class="faq-section">
-	<div class="card faq-card">
-		<div class="faq-header">
-			<h2>FAQ</h2>
-			<p class="faq-subtitle">Common questions about data and privacy</p>
-		</div>
-		<div class="faq-list">
-			<details>
-				<summary>Are my keys safe?</summary>
-				<p>
-					We only require a RevenueCat API key with <strong>read-only</strong> access to "Chart metrics". Keys are stored encrypted at rest and never shared publicly. You can revoke the key from RevenueCat at any time.
-				</p>
-			</details>
+        <div class="card faq-card">
+                <div class="faq-header">
+                        <div>
+                                <h2>FAQ</h2>
+                                <p class="faq-subtitle">Everything you need to know about security, data freshness, and control.</p>
+                        </div>
+                        <span class="faq-tag">Updated March 2024</span>
+                </div>
+                <div class="faq-list">
+                        <details>
+                                <summary>Are my keys safe?</summary>
+                                <p>
+                                        We only require a RevenueCat API key with <strong>read-only</strong> access to "Chart metrics". Keys are stored encrypted at rest and never shared publicly. You can revoke the key from RevenueCat at any time.
+                                </p>
+                        </details>
 
-			<details>
-				<summary>How frequent are data updating?</summary>
-				<p>
-					Metrics are refreshed automatically on a daily basis (midnight UTC). We aim to keep the leaderboard current without requiring manual updates.
-				</p>
-			</details>
+                        <details>
+                                <summary>How frequently is data refreshed?</summary>
+                                <p>
+                                        Metrics are pulled automatically every 24 hours at midnight UTC. No manual action is required—your leaderboard position updates as soon as new data becomes available.
+                                </p>
+                        </details>
 
-			<details>
-				<summary>Why can't I see full time revenue?</summary>
-				<p>
-					RevenueCat's API only returns revenue for the last 28 days. We are working on a solution to display all-time revenue with graphs and charts.
-				</p>
-			</details>
+                        <details>
+                                <summary>Why can't I see all-time revenue?</summary>
+                                <p>
+                                        RevenueCat currently exposes revenue totals for the last 28 days via their API. We're exploring complementary sources so we can surface all-time revenue and richer insights soon.
+                                </p>
+                        </details>
 
-			<details>
-				<summary>How can I delete my app?</summary>
-				<p>
-					You can delete your app revoking the API key from RevenueCat. It will be removed from the leaderboard within 24 hours (when the next daily update runs).
-				</p>
-			</details>
-		</div>
-	</div>
+                        <details>
+                                <summary>How do I remove my app?</summary>
+                                <p>
+                                        You have full control—simply revoke the RevenueCat API key. The app disappears from the leaderboard during the next nightly sync (within 24 hours).
+                                </p>
+                        </details>
+                </div>
+        </div>
 </section>
 
 <style>
-	.faq-section {
-		margin-top: 2rem;
-	}
+        .faq-section {
+                margin-top: 1rem;
+        }
 
-	.card {
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		border-radius: 8px;
-		overflow: hidden;
-		transition: background-color 0.3s ease, border-color 0.3s ease;
-	}
+        .card {
+                background: color-mix(in srgb, var(--card-bg) 92%, rgba(255, 255, 255, 0.35));
+                border: 1px solid color-mix(in srgb, var(--card-border) 70%, transparent);
+                border-radius: 24px;
+                overflow: hidden;
+                transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: var(--shadow-soft);
+                backdrop-filter: blur(10px);
+        }
 
-	.faq-card {
-		padding: 1.5rem;
-	}
+        .faq-card {
+                padding: clamp(1.75rem, 4vw, 2.25rem);
+                display: flex;
+                flex-direction: column;
+                gap: 1.75rem;
+        }
 
-	.faq-header h2 {
-		margin: 0 0 0.25rem 0;
-		font-size: 1.25rem;
-		color: var(--fg);
-	}
+        .faq-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1.5rem;
+        }
 
-	.faq-subtitle {
-		margin: 0 0 1rem 0;
-		color: var(--muted);
-		font-size: 0.9rem;
-	}
+        .faq-header h2 {
+                margin: 0 0 0.4rem 0;
+                font-size: clamp(1.35rem, 2.5vw, 1.6rem);
+                color: var(--fg);
+                letter-spacing: -0.01em;
+        }
 
-	.faq-list details {
-		border-top: 1px solid var(--border);
-		padding: 0.75rem 0;
-	}
+        .faq-subtitle {
+                margin: 0;
+                color: var(--muted);
+                font-size: 0.95rem;
+                line-height: 1.6;
+        }
 
-	.faq-list details:first-of-type {
-		border-top: none;
-	}
+        .faq-tag {
+                align-self: flex-start;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                padding: 0.4rem 0.85rem;
+                border-radius: 999px;
+                background: color-mix(in srgb, var(--secondary) 70%, transparent);
+                color: color-mix(in srgb, var(--primary) 55%, var(--muted));
+        }
 
-	.faq-list summary {
-		cursor: pointer;
-		font-weight: 600;
-		color: var(--fg);
-		list-style: none;
-	}
+        .faq-list {
+                display: grid;
+                gap: 1rem;
+        }
 
-	.faq-list summary::-webkit-details-marker {
-		display: none;
-	}
+        .faq-list details {
+                border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+                border-radius: 16px;
+                padding: 1.15rem 1.35rem;
+                background: color-mix(in srgb, var(--card-bg) 96%, rgba(255, 255, 255, 0.35));
+                transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-	.faq-list p {
-		margin: 0.5rem 0 0 0;
-		color: var(--muted);
-		line-height: 1.6;
-		font-size: 0.95rem;
-	}
+        .faq-list details[open] {
+                border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+                box-shadow: var(--shadow-soft);
+        }
+
+        .faq-list summary {
+                cursor: pointer;
+                font-weight: 600;
+                color: var(--fg);
+                list-style: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                font-size: 1rem;
+        }
+
+        .faq-list summary::-webkit-details-marker {
+                display: none;
+        }
+
+        .faq-list summary::after {
+                content: '+';
+                font-size: 1.25rem;
+                line-height: 1;
+                color: color-mix(in srgb, var(--primary) 45%, var(--muted));
+                transition: transform 0.3s ease;
+        }
+
+        .faq-list details[open] summary::after {
+                transform: rotate(45deg);
+        }
+
+        .faq-list p {
+                margin: 0.9rem 0 0 0;
+                color: var(--muted);
+                line-height: 1.7;
+                font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+                .faq-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                }
+
+                .faq-tag {
+                        margin-top: 0.5rem;
+                }
+        }
 </style>
 

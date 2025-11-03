@@ -21,13 +21,20 @@ import '../styles/globals.css';
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="An iOS app revenue tracker and leaderboard" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/appmrr.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<Analytics />
+                <meta charset="UTF-8" />
+                <meta name="description" content="An iOS app revenue tracker and leaderboard" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="theme-color" content="#6366f1" />
+                <link rel="icon" type="image/png" href="/appmrr.png" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link
+                        rel="stylesheet"
+                        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+                />
+                <meta name="generator" content={Astro.generator} />
+                <title>{title}</title>
+                <Analytics />
 	</head>
 	<body>
 		<slot />
@@ -40,45 +47,36 @@ import '../styles/globals.css';
 </html>
 
 <style>
-	:root {
-		/* consume the same tokens defined in pages to keep in sync */
-		--background: oklch(1 0 0);
-		--foreground: oklch(0.145 0 0);
-		--border: oklch(0.922 0 0);
-		--muted-foreground: oklch(0.556 0 0);
+        :global(html) {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+                transition: background-color 0.3s ease;
+        }
 
-		--bg: var(--background);
-		--fg: var(--foreground);
-		--muted: var(--muted-foreground);
-	}
+        :global(body) {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                background: radial-gradient(circle at top, rgba(99, 102, 241, 0.22), transparent 55%)
+                                fixed,
+                        radial-gradient(circle at 120% 20%, rgba(236, 72, 153, 0.2), transparent 60%) fixed,
+                        var(--bg);
+                color: var(--fg);
+                transition: background-color 0.3s ease, color 0.3s ease;
+                position: relative;
+        }
 
-	[data-theme="dark"], .dark {
-		--background: oklch(0.145 0 0);
-		--foreground: oklch(0.985 0 0);
-		--border: oklch(0.269 0 0);
-		--muted-foreground: oklch(0.708 0 0);
+        :global(body)::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                background: radial-gradient(circle at 10% 90%, rgba(56, 189, 248, 0.15), transparent 60%);
+                opacity: 1;
+                z-index: -1;
+        }
 
-		--bg: var(--background);
-		--fg: var(--foreground);
-		--muted: var(--muted-foreground);
-	}
-
-	:global(html) {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-		transition: background-color 0.3s ease;
-	}
-
-	:global(body) {
-		margin: 0;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		background: var(--bg);
-		color: var(--fg);
-		transition: background-color 0.3s ease, color 0.3s ease;
-	}
-
-	footer {
+        footer {
 		margin-top: auto;
 		border-top: 1px solid var(--border);
 		padding: 3rem 0;

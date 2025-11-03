@@ -26,34 +26,34 @@ const { startups } = Astro.props;
 ---
 
 <div class="card">
-	<div class="table-container">
-		<table>
-			<thead>
-				<tr>
-					<th class="rank-col">Rank</th>
-					<th class="app-col">App</th>
-					<th class="founder-col">Founder</th>
-					<th class="sortable amount-header" data-sort="mrr">
-						<button class="sort-header" data-field="mrr">
-							MRR
-							<svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
-							</svg>
-						</button>
-					</th>
-					<th class="sortable amount-header" data-sort="revenue">
-						<button class="sort-header" data-field="revenue">
-							Revenue (28d)
-							<svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
-							</svg>
-						</button>
-					</th>
-					<th class="action-col">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				{startups.map((startup, index) => {
+        <div class="table-container">
+                <table>
+                        <thead>
+                                <tr>
+                                        <th class="rank-col">Rank</th>
+                                        <th class="app-col">App</th>
+                                        <th class="founder-col">Founder</th>
+                                        <th class="sortable amount-header" data-sort="mrr">
+                                                <button class="sort-header" data-field="mrr">
+                                                        MRR
+                                                        <svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
+                                                        </svg>
+                                                </button>
+                                        </th>
+                                        <th class="sortable amount-header" data-sort="revenue">
+                                                <button class="sort-header" data-field="revenue">
+                                                        Revenue (28d)
+                                                        <svg class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path d="M7 13l5 5 5-5M7 6l5-5 5 5"></path>
+                                                        </svg>
+                                                </button>
+                                        </th>
+                                        <th class="action-col">Action</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                {startups.map((startup, index) => {
 					// Calculate logo URL
 					let logoUrl = '/placeholder.svg';
 					if (startup.app_store_id) {
@@ -63,29 +63,29 @@ const { startups } = Astro.props;
 						logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 					}
 					
-					return (
-					<tr>
-						<td class="rank-cell">
-							{index === 0 && <span class="medal">🥇</span>}
-							{index === 1 && <span class="medal">🥈</span>}
-							{index === 2 && <span class="medal">🥉</span>}
-							{index > 2 && <span class="rank-number">{index + 1}</span>}
-						</td>
-						<td class="app-cell">
-							<img
-								src={logoUrl}
-								alt={startup.name}
+                                        return (
+                                        <tr>
+                                                <td class="rank-cell" data-label="Rank">
+                                                        {index === 0 && <span class="medal">🥇</span>}
+                                                        {index === 1 && <span class="medal">🥈</span>}
+                                                        {index === 2 && <span class="medal">🥉</span>}
+                                                        {index > 2 && <span class="rank-number">{index + 1}</span>}
+                                                </td>
+                                                <td class="app-cell" data-label="App">
+                                                        <img
+                                                                src={logoUrl}
+                                                                alt={startup.name}
 								class="app-logo"
 								loading="lazy"
 							/>
-							<div class="app-info">
-								<span class="app-name">{startup.name}</span>
-								<BadgeCheck class="badge-icon" stroke-width="2.5" />
-							</div>
-						</td>
-						<td class="founder-cell">
-							{startup.founder_username ? (
-								<a href={`https://twitter.com/${startup.founder_username.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="founder-link">
+                                                        <div class="app-info">
+                                                                <span class="app-name">{startup.name}</span>
+                                                                <BadgeCheck class="badge-icon" stroke-width="2.5" />
+                                                        </div>
+                                                </td>
+                                                <td class="founder-cell" data-label="Founder">
+                                                        {startup.founder_username ? (
+                                                                <a href={`https://twitter.com/${startup.founder_username.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="founder-link">
 									<img
 										src={`https://unavatar.io/x/${startup.founder_username.replace('@', '')}`}
 										alt={startup.founder_username}
@@ -96,14 +96,14 @@ const { startups } = Astro.props;
 									<span>@{startup.founder_username.replace('@', '')}</span>
 								</a>
 							) : (
-								<span class="empty-field">—</span>
-							)}
-						</td>
-						<td class="amount">${startup.mrr.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
-						<td class="amount">${startup.total_revenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
-						<td class="action-cell">
-							{(startup.website_url || startup.app_store_id) && (
-								<a 
+                                                                <span class="empty-field">—</span>
+                                                        )}
+                                                </td>
+                                                <td class="amount" data-label="MRR">${startup.mrr.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+                                                <td class="amount" data-label="Revenue (28d)">${startup.total_revenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+                                                <td class="action-cell" data-label="Action">
+                                                        {(startup.website_url || startup.app_store_id) && (
+                                                                <a
 									href={startup.website_url || `https://apps.apple.com/us/app/id${startup.app_store_id}`} 
 									target="_blank" 
 									rel="noopener noreferrer" 
@@ -126,42 +126,47 @@ const { startups } = Astro.props;
 </div>
 
 <style>
-	.card {
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		border-radius: 8px;
-		overflow: hidden;
-		transition: background-color 0.3s ease, border-color 0.3s ease;
-	}
+        .card {
+                background: color-mix(in srgb, var(--card-bg) 94%, rgba(255, 255, 255, 0.35));
+                border: 1px solid color-mix(in srgb, var(--card-border) 70%, transparent);
+                border-radius: 24px;
+                overflow: hidden;
+                transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: var(--shadow-soft);
+                backdrop-filter: blur(12px);
+        }
 
-	.table-container {
-		overflow-x: auto;
-	}
+        .table-container {
+                overflow-x: auto;
+        }
 
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		background: var(--card-bg);
-	}
+        table {
+                width: 100%;
+                border-collapse: collapse;
+                background: transparent;
+        }
 
-	thead {
-		background: var(--thead-bg);
-		border-bottom: 1px solid var(--border);
-		transition: background-color 0.3s ease, border-color 0.3s ease;
-	}
+        thead {
+                background: color-mix(in srgb, var(--thead-bg) 80%, transparent);
+                border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
+                position: sticky;
+                top: 0;
+                z-index: 1;
+        }
 
-	th {
-		padding: 1rem 1.5rem;
-		text-align: left;
-		font-weight: 600;
-		font-size: 0.875rem;
-		color: var(--muted);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		white-space: nowrap;
-		transition: color 0.3s ease;
-		background: var(--thead-bg);
-	}
+        th {
+                padding: 1.1rem 1.75rem;
+                text-align: left;
+                font-weight: 600;
+                font-size: 0.8rem;
+                color: color-mix(in srgb, var(--muted) 75%, var(--fg));
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+                transition: color 0.3s ease;
+                background: transparent;
+        }
 
 	th.sortable,
 	th.amount-header {
@@ -195,28 +200,30 @@ const { startups } = Astro.props;
 		opacity: 0.5;
 	}
 
-	tbody tr {
-		background: var(--card-bg);
-		border-bottom: 1px solid var(--border);
-		transition: background-color 0.15s, border-color 0.3s ease;
-	}
+        tbody tr {
+                background: color-mix(in srgb, var(--card-bg) 96%, rgba(255, 255, 255, 0.35));
+                border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+                transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.3s ease;
+        }
 
-	tbody tr:hover {
-		background: var(--row-hover);
-	}
+        tbody tr:hover {
+                background: color-mix(in srgb, var(--row-hover) 75%, var(--card-bg));
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-hover);
+        }
 
-	tbody tr:last-child {
-		border-bottom: none;
-	}
+        tbody tr:last-child {
+                border-bottom: none;
+        }
 
-	td {
-		padding: 1rem 1.5rem;
-		font-size: 0.95rem;
-		vertical-align: middle;
-		position: relative;
-		background: var(--card-bg);
-		color: var(--fg);
-	}
+        td {
+                padding: 1.1rem 1.75rem;
+                font-size: 0.95rem;
+                vertical-align: middle;
+                position: relative;
+                background: transparent;
+                color: var(--fg);
+        }
 
 	.rank-col {
 		width: 80px;
@@ -243,14 +250,14 @@ const { startups } = Astro.props;
 		min-width: 180px;
 	}
 
-	.founder-cell {
-		white-space: nowrap;
-	}
+        .founder-cell {
+                white-space: nowrap;
+        }
 
-	.founder-link {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
+        .founder-link {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
 		text-decoration: none;
 		color: var(--fg);
 		transition: opacity 0.15s, color 0.3s ease;
@@ -277,12 +284,12 @@ const { startups } = Astro.props;
 		min-width: 250px;
 	}
 
-	.app-cell {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: nowrap;
-	}
+        .app-cell {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                flex-wrap: nowrap;
+        }
 
 	.app-logo {
 		width: 40px;
@@ -339,35 +346,118 @@ const { startups } = Astro.props;
 		text-align: center;
 	}
 
-	.action-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border: none;
-		background: transparent;
-		color: var(--muted);
-		cursor: pointer;
-		border-radius: 6px;
-		transition: all 0.15s, color 0.3s ease;
-	}
+        .action-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+                border: none;
+                background: color-mix(in srgb, var(--secondary) 35%, transparent);
+                color: var(--muted);
+                cursor: pointer;
+                border-radius: 10px;
+                transition: all 0.2s ease, color 0.3s ease;
+        }
 
-	.action-btn:hover {
-		background: var(--row-hover);
-		color: var(--fg);
-	}
+        .action-btn:hover {
+                background: color-mix(in srgb, var(--primary) 20%, var(--secondary));
+                color: var(--primary-foreground);
+                transform: translateY(-1px);
+        }
 
 	.action-btn svg {
 		width: 16px;
 		height: 16px;
 	}
 
-	@media (max-width: 768px) {
-		th, td {
-			padding: 0.75rem 1rem;
-			font-size: 0.875rem;
-		}
-	}
+        @media (max-width: 768px) {
+                th,
+                td {
+                        padding: 0.85rem 1.2rem;
+                        font-size: 0.9rem;
+                }
+        }
+
+        @media (max-width: 720px) {
+                thead {
+                        display: none;
+                }
+
+                table,
+                tbody,
+                tr,
+                td {
+                        display: block;
+                        width: 100%;
+                }
+
+                tbody {
+                        display: grid;
+                        gap: 1.25rem;
+                        padding: 1.5rem;
+                }
+
+                tbody tr {
+                        border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+                        border-radius: 18px;
+                        padding: 1.25rem;
+                        box-shadow: var(--shadow-soft);
+                        transform: none;
+                }
+
+                tbody tr:hover {
+                        transform: none;
+                        box-shadow: var(--shadow-hover);
+                }
+
+                td {
+                        padding: 0.65rem 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 1.25rem;
+                        font-size: 0.95rem;
+                }
+
+                td::before {
+                        content: attr(data-label);
+                        font-size: 0.75rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.08em;
+                        color: color-mix(in srgb, var(--muted) 80%, var(--fg));
+                }
+
+                .rank-cell,
+                .action-cell {
+                        justify-content: flex-start;
+                }
+
+                .app-cell {
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 1rem;
+                }
+
+                .app-cell::before {
+                        content: 'App';
+                        min-width: 52px;
+                }
+
+                .app-info {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0.2rem;
+                }
+
+                .action-cell {
+                        justify-content: flex-end;
+                }
+
+                .action-btn {
+                        width: 40px;
+                        height: 40px;
+                }
+        }
 </style>
 

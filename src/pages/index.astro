@@ -31,21 +31,21 @@ const startups = await getStartupsWithMetrics(sortBy);
 ---
 
 <Layout title="AppMRR Leaderboard">
-	<main class="main">
-		<div class="container">
-			<Header />
-			
-			<AddAppButton />
+        <main class="page-shell">
+                <div class="page-container">
+                        <Header />
 
-			{startups.length === 0 ? (
-				<EmptyState />
-			) : (
-				<LeaderboardTable startups={startups} />
-			)}
-			
-			<FAQSection />
-		</div>
-	</main>
+                        <AddAppButton />
+
+                        {startups.length === 0 ? (
+                                <EmptyState />
+                        ) : (
+                                <LeaderboardTable startups={startups} />
+                        )}
+
+                        <FAQSection />
+                </div>
+        </main>
 
 	<AddAppModal />
 </Layout>
@@ -60,21 +60,28 @@ const startups = await getStartupsWithMetrics(sortBy);
 </script>
 
 <style>
-	.main {
-		min-height: calc(100vh - 200px);
-		padding: 2rem 0;
-		transition: background-color 0.3s ease;
-	}
+        .page-shell {
+                min-height: calc(100vh - 200px);
+                padding: clamp(2.5rem, 6vw, 4.5rem) 1.5rem 3rem;
+                display: flex;
+                justify-content: center;
+                transition: padding 0.3s ease;
+        }
 
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
-	}
+        .page-container {
+                width: min(1080px, 100%);
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+        }
 
-	@media (max-width: 768px) {
-		.container {
-			padding: 0 1rem;
-		}
-	}
+        @media (max-width: 768px) {
+                .page-shell {
+                        padding: 2rem 1.25rem 2.5rem;
+                }
+
+                .page-container {
+                        gap: 1.75rem;
+                }
+        }
 </style>
