@@ -10,44 +10,90 @@
 ---
 
 <div class="actions-bar">
-	<button class="add-btn" id="open-modal">
-		<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-			<line x1="12" y1="5" x2="12" y2="19"></line>
-			<line x1="5" y1="12" x2="19" y2="12"></line>
-		</svg>
-		Add New App
-	</button>
+        <div class="actions-copy">
+                <h2>Showcase your product</h2>
+                <p>Add your app to the leaderboard to track momentum alongside the top performers.</p>
+        </div>
+        <button class="add-btn" id="open-modal">
+                <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add New App
+        </button>
 </div>
 
 <style>
-	.actions-bar {
-		display: flex;
-		justify-content: flex-end;
-		margin-bottom: 1.5rem;
-	}
+        .actions-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: clamp(1rem, 4vw, 2rem);
+                padding: clamp(1.2rem, 3.2vw, 1.75rem);
+                border-radius: 18px;
+                background: color-mix(in oklch, var(--card-bg) 90%, transparent);
+                border: 1px solid color-mix(in oklch, var(--card-border) 60%, transparent);
+                box-shadow: 0 18px 45px -32px color-mix(in oklch, var(--fg) 25%, transparent);
+        }
 
-	.add-btn {
-		background: var(--btn-bg);
-		color: var(--btn-text);
-		border: 1px solid var(--btn-bg);
-		padding: 0.625rem 1rem;
-		font-size: 0.9rem;
-		cursor: pointer;
-		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-		font-family: inherit;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		border-radius: 6px;
-	}
+        .actions-copy {
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                color: color-mix(in oklch, var(--fg) 85%, var(--muted) 15%);
+        }
 
-	.add-btn:hover {
-		opacity: 0.8;
-	}
+        .actions-copy h2 {
+                margin: 0;
+                font-size: clamp(1.1rem, 3vw, 1.35rem);
+                font-weight: 600;
+        }
 
-	.add-btn .icon {
-		width: 16px;
-		height: 16px;
-	}
+        .actions-copy p {
+                margin: 0;
+                font-size: clamp(0.85rem, 2.3vw, 0.95rem);
+                color: color-mix(in oklch, var(--muted) 65%, var(--fg) 35%);
+        }
+
+        .add-btn {
+                background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 75%, var(--fg) 25%), color-mix(in oklch, var(--primary) 55%, var(--card-bg) 45%));
+                color: var(--btn-text);
+                border: 0;
+                padding: 0.75rem 1.4rem;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: transform 0.15s ease, box-shadow 0.3s ease;
+                font-family: inherit;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.65rem;
+                border-radius: 999px;
+                box-shadow: 0 15px 30px -18px color-mix(in oklch, var(--primary) 75%, transparent);
+        }
+
+        .add-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 22px 36px -18px color-mix(in oklch, var(--primary) 80%, transparent);
+        }
+
+        .add-btn .icon {
+                width: 16px;
+                height: 16px;
+        }
+
+        @media (max-width: 768px) {
+                .actions-bar {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding: 1.1rem 1.2rem;
+                }
+
+                .add-btn {
+                        width: 100%;
+                        justify-content: center;
+                        padding: 0.85rem 1.2rem;
+                        font-size: 1rem;
+                }
+        }
 </style>
 

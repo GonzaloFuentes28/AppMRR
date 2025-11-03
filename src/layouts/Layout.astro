@@ -29,12 +29,12 @@ import '../styles/globals.css';
 		<title>{title}</title>
 		<Analytics />
 	</head>
-	<body>
-		<slot />
-		<footer>
-			<div class="footer-container">
-				<p>MRR and revenue refresh once per day. <br />AppMRR is not responsible for misuse of your API keys—please use a read-only key limited to chart metrics.</p>
-			</div>
+        <body>
+                <slot />
+                <footer>
+                        <div class="footer-container">
+                                <p>MRR and revenue refresh once per day. <br />AppMRR is not responsible for misuse of your API keys—please use a read-only key limited to chart metrics.</p>
+                        </div>
 		</footer>
 	</body>
 </html>
@@ -68,19 +68,23 @@ import '../styles/globals.css';
 		transition: background-color 0.3s ease;
 	}
 
-	:global(body) {
-		margin: 0;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		background: var(--bg);
-		color: var(--fg);
-		transition: background-color 0.3s ease, color 0.3s ease;
-	}
+        :global(body) {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                background: radial-gradient(circle at top left, color-mix(in oklch, var(--primary) 40%, transparent), transparent 55%),
+                        radial-gradient(circle at bottom right, color-mix(in oklch, var(--primary) 35%, transparent), transparent 60%),
+                        var(--bg);
+                color: var(--fg);
+                transition: background-color 0.3s ease, color 0.3s ease;
+                background-attachment: fixed;
+                background-size: cover;
+        }
 
-	footer {
-		margin-top: auto;
-		border-top: 1px solid var(--border);
+        footer {
+                margin-top: auto;
+                border-top: 1px solid var(--border);
 		padding: 3rem 0;
 		background: var(--bg);
 		transition: background-color 0.3s ease, border-color 0.3s ease;

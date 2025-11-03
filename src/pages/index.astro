@@ -31,13 +31,13 @@ const startups = await getStartupsWithMetrics(sortBy);
 ---
 
 <Layout title="AppMRR Leaderboard">
-	<main class="main">
-		<div class="container">
-			<Header />
-			
-			<AddAppButton />
+        <main class="main">
+                <div class="container">
+                        <Header />
 
-			{startups.length === 0 ? (
+                        <AddAppButton />
+
+                        {startups.length === 0 ? (
 				<EmptyState />
 			) : (
 				<LeaderboardTable startups={startups} />
@@ -60,21 +60,25 @@ const startups = await getStartupsWithMetrics(sortBy);
 </script>
 
 <style>
-	.main {
-		min-height: calc(100vh - 200px);
-		padding: 2rem 0;
-		transition: background-color 0.3s ease;
-	}
+        .main {
+                min-height: calc(100vh - 200px);
+                padding: clamp(1.5rem, 5vw, 3.5rem) 0;
+                transition: background-color 0.3s ease;
+        }
 
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
-	}
+        .container {
+                max-width: min(1120px, 92vw);
+                margin: 0 auto;
+                padding: 0 clamp(1rem, 4vw, 2.5rem);
+                display: flex;
+                flex-direction: column;
+                gap: clamp(1.5rem, 4vw, 2.5rem);
+        }
 
-	@media (max-width: 768px) {
-		.container {
-			padding: 0 1rem;
-		}
-	}
+        @media (max-width: 768px) {
+                .main {
+                        padding-top: clamp(1rem, 6vw, 2rem);
+                        padding-bottom: clamp(1.5rem, 12vw, 3rem);
+                }
+        }
 </style>

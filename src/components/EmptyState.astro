@@ -10,39 +10,78 @@
 ---
 
 <div class="empty-state">
-	<p>No apps yet.</p>
-	<button class="add-btn" id="open-modal-empty">Add yours</button>
+        <div class="empty-card">
+                <div class="empty-icon">🚀</div>
+                <h3>Be the first to land here</h3>
+                <p>Add your product to kickstart the leaderboard and share your growth story.</p>
+                <button class="add-btn" id="open-modal-empty">Add yours</button>
+        </div>
 </div>
 
 <style>
-	.empty-state {
-		text-align: center;
-		padding: 4rem 2rem;
-		color: var(--muted);
-		transition: color 0.3s ease;
-	}
+        .empty-state {
+                display: flex;
+                justify-content: center;
+                padding: clamp(3rem, 8vw, 4.5rem) clamp(1.5rem, 6vw, 3rem);
+        }
 
-	.empty-state p {
-		margin: 0 0 1rem;
-	}
+        .empty-card {
+                text-align: center;
+                color: color-mix(in oklch, var(--muted) 60%, var(--fg) 40%);
+                background: color-mix(in oklch, var(--card-bg) 90%, transparent);
+                border: 1px solid color-mix(in oklch, var(--card-border) 65%, transparent);
+                border-radius: 22px;
+                padding: clamp(2.5rem, 7vw, 3.5rem) clamp(1.5rem, 6vw, 3rem);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                max-width: 460px;
+                box-shadow: 0 28px 60px -40px color-mix(in oklch, var(--fg) 28%, transparent);
+        }
 
-	.add-btn {
-		background: var(--btn-bg);
-		color: var(--btn-text);
-		border: 1px solid var(--btn-bg);
-		padding: 0.625rem 1rem;
-		font-size: 0.9rem;
-		cursor: pointer;
-		transition: all 0.15s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-		font-family: inherit;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		border-radius: 6px;
-	}
+        .empty-icon {
+                font-size: clamp(2.5rem, 8vw, 3.5rem);
+        }
 
-	.add-btn:hover {
-		opacity: 0.8;
-	}
+        .empty-card h3 {
+                margin: 0;
+                font-size: clamp(1.35rem, 3vw, 1.5rem);
+                color: var(--fg);
+        }
+
+        .empty-card p {
+                margin: 0;
+                line-height: 1.6;
+                font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .add-btn {
+                background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 75%, var(--fg) 25%), color-mix(in oklch, var(--primary) 55%, var(--card-bg) 45%));
+                color: var(--btn-text);
+                border: 0;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: transform 0.15s ease, box-shadow 0.3s ease;
+                font-family: inherit;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                border-radius: 999px;
+                box-shadow: 0 18px 36px -24px color-mix(in oklch, var(--primary) 75%, transparent);
+        }
+
+        .add-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 22px 42px -20px color-mix(in oklch, var(--primary) 80%, transparent);
+        }
+
+        @media (max-width: 768px) {
+                .empty-state {
+                        padding: 3rem 1.25rem;
+                }
+        }
 </style>
 
